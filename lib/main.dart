@@ -25,8 +25,6 @@ class WorkshopApp extends StatelessWidget {
   }
 }
 
-// ─── Data Model ───────────────────────────────────────────────────────────────
-
 class Workshop {
   final String id;
   final String judul;
@@ -54,8 +52,6 @@ class Workshop {
   double get persenKuota => kuotaTerisi / kuotaTotal;
 }
 
-// ─── Home Page ────────────────────────────────────────────────────────────────
-
 class WorkshopHomePage extends StatefulWidget {
   const WorkshopHomePage({super.key});
 
@@ -68,7 +64,7 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
     Workshop(
       id: '1',
       judul: 'Workshop Flutter Dasar',
-      tanggal: 'Senin, 10 Mei 2026 • 09.00–12.00 WIB',
+      tanggal: 'Senin, 10 Mei 2026 - 09.00-12.00 WIB',
       lokasi: 'Gedung A, Lantai 3, Lab Komputer',
       kuotaTerisi: 30,
       kuotaTotal: 50,
@@ -78,7 +74,7 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
     Workshop(
       id: '2',
       judul: 'Workshop UI/UX Design',
-      tanggal: 'Rabu, 15 Mei 2026 • 13.00–16.00 WIB',
+      tanggal: 'Rabu, 15 Mei 2026 - 13.00-16.00 WIB',
       lokasi: 'Aula Utama, Gedung Rektorat',
       kuotaTerisi: 38,
       kuotaTotal: 40,
@@ -88,7 +84,7 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
     Workshop(
       id: '3',
       judul: 'Workshop Machine Learning',
-      tanggal: 'Jumat, 17 Mei 2026 • 08.00–12.00 WIB',
+      tanggal: 'Jumat, 17 Mei 2026 - 08.00-12.00 WIB',
       lokasi: 'Ruang Seminar, Gedung B Lt. 2',
       kuotaTerisi: 15,
       kuotaTotal: 35,
@@ -98,7 +94,7 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
     Workshop(
       id: '4',
       judul: 'Workshop Web Development',
-      tanggal: 'Sabtu, 18 Mei 2026 • 10.00–14.00 WIB',
+      tanggal: 'Sabtu, 18 Mei 2026 - 10.00-14.00 WIB',
       lokasi: 'Lab Internet, Gedung C Lt. 1',
       kuotaTerisi: 25,
       kuotaTotal: 25,
@@ -108,7 +104,7 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
     Workshop(
       id: '5',
       judul: 'Workshop Cyber Security',
-      tanggal: 'Senin, 20 Mei 2026 • 13.00–17.00 WIB',
+      tanggal: 'Senin, 20 Mei 2026 - 13.00-17.00 WIB',
       lokasi: 'Ruang Kelas 301, Gedung D',
       kuotaTerisi: 10,
       kuotaTotal: 30,
@@ -119,13 +115,13 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
 
   void _daftar(Workshop workshop) {
     if (!workshop.tersedia || workshop.sudahDaftar) return;
-
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Konfirmasi Pendaftaran'),
-        content: Text('Apakah kamu yakin ingin mendaftar workshop\n"${workshop.judul}"?'),
+        content: Text(
+            'Apakah kamu yakin ingin mendaftar workshop\n"${workshop.judul}"?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -135,17 +131,19 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
             style: ElevatedButton.styleFrom(
               backgroundColor: workshop.warna,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
             ),
             onPressed: () {
               Navigator.pop(ctx);
               setState(() => workshop.sudahDaftar = true);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('✅ Berhasil mendaftar: ${workshop.judul}'),
+                  content: Text('Berhasil mendaftar: ${workshop.judul}'),
                   backgroundColor: Colors.green.shade700,
                   behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
                 ),
               );
             },
@@ -168,7 +166,7 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '🎓 Workshop Kampus',
+              'Workshop Kampus',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
@@ -188,13 +186,15 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Header Stats ──
           Container(
             color: const Color(0xFF1A73E8),
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
             child: Row(
               children: [
-                _StatChip(label: 'Total Workshop', value: '${_workshops.length}', icon: Icons.event),
+                _StatChip(
+                    label: 'Total Workshop',
+                    value: '${_workshops.length}',
+                    icon: Icons.event),
                 const SizedBox(width: 12),
                 _StatChip(
                   label: 'Sudah Daftar',
@@ -204,27 +204,23 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
                 const SizedBox(width: 12),
                 _StatChip(
                   label: 'Tersedia',
-                  value: '${_workshops.where((w) => w.tersedia && !w.sudahDaftar).length}',
+                  value:
+                      '${_workshops.where((w) => w.tersedia && !w.sudahDaftar).length}',
                   icon: Icons.pending_outlined,
                 ),
               ],
             ),
           ),
-
-          // ── Section Label ──
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
             child: Text(
               'Workshop Tersedia',
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey.shade800,
-              ),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade800),
             ),
           ),
-
-          // ── List Workshop ──
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
@@ -232,9 +228,7 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
               itemBuilder: (context, index) {
                 final workshop = _workshops[index];
                 return WorkshopCard(
-                  workshop: workshop,
-                  onDaftar: () => _daftar(workshop),
-                );
+                    workshop: workshop, onDaftar: () => _daftar(workshop));
               },
             ),
           ),
@@ -244,14 +238,13 @@ class _WorkshopHomePageState extends State<WorkshopHomePage> {
   }
 }
 
-// ─── Stat Chip ────────────────────────────────────────────────────────────────
-
 class _StatChip extends StatelessWidget {
   final String label;
   final String value;
   final IconData icon;
 
-  const _StatChip({required this.label, required this.value, required this.icon});
+  const _StatChip(
+      {required this.label, required this.value, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -268,7 +261,9 @@ class _StatChip extends StatelessWidget {
             const SizedBox(height: 4),
             Text(value,
                 style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18)),
             Text(label,
                 style: const TextStyle(color: Colors.white70, fontSize: 9),
                 textAlign: TextAlign.center),
@@ -279,13 +274,12 @@ class _StatChip extends StatelessWidget {
   }
 }
 
-// ─── Workshop Card ────────────────────────────────────────────────────────────
-
 class WorkshopCard extends StatelessWidget {
   final Workshop workshop;
   final VoidCallback onDaftar;
 
-  const WorkshopCard({super.key, required this.workshop, required this.onDaftar});
+  const WorkshopCard(
+      {super.key, required this.workshop, required this.onDaftar});
 
   @override
   Widget build(BuildContext context) {
@@ -301,11 +295,11 @@ class WorkshopCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Color Header Strip ──
           Container(
             decoration: BoxDecoration(
               color: workshop.warna,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(16)),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
@@ -314,9 +308,9 @@ class WorkshopCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Kategori badge
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.25),
                           borderRadius: BorderRadius.circular(20),
@@ -324,18 +318,18 @@ class WorkshopCard extends StatelessWidget {
                         child: Text(
                           workshop.kategori,
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 10, fontWeight: FontWeight.w600),
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                       const SizedBox(height: 6),
-                      // Judul
                       Text(
                         workshop.judul,
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -344,27 +338,26 @@ class WorkshopCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
                     child: Icon(Icons.check, color: workshop.warna, size: 16),
                   )
                 else if (penuh)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.red.shade700,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                        color: Colors.red.shade700,
+                        borderRadius: BorderRadius.circular(20)),
                     child: const Text('PENUH',
                         style: TextStyle(
-                            color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold)),
                   ),
               ],
             ),
           ),
-
-          // ── Info Body ──
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 6),
             child: Column(
@@ -379,8 +372,6 @@ class WorkshopCard extends StatelessWidget {
                     text: workshop.lokasi,
                     warna: workshop.warna),
                 const SizedBox(height: 12),
-
-                // ── Kuota Bar ──
                 Row(
                   children: [
                     Icon(Icons.people_outline, size: 16, color: workshop.warna),
@@ -402,7 +393,9 @@ class WorkshopCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  color: penuh ? Colors.red : Colors.green.shade700,
+                                  color: penuh
+                                      ? Colors.red
+                                      : Colors.green.shade700,
                                 ),
                               ),
                             ],
@@ -428,10 +421,7 @@ class WorkshopCard extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 14),
-
-                // ── Tombol Daftar ──
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
@@ -455,9 +445,8 @@ class WorkshopCard extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           sudahDaftar ? Colors.green.shade600 : workshop.warna,
-                      disabledBackgroundColor: penuh
-                          ? Colors.red.shade300
-                          : Colors.green.shade400,
+                      disabledBackgroundColor:
+                          penuh ? Colors.red.shade300 : Colors.green.shade400,
                       foregroundColor: Colors.white,
                       disabledForegroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -476,8 +465,6 @@ class WorkshopCard extends StatelessWidget {
   }
 }
 
-// ─── Info Row ─────────────────────────────────────────────────────────────────
-
 class _InfoRow extends StatelessWidget {
   final IconData icon;
   final String text;
@@ -493,10 +480,9 @@ class _InfoRow extends StatelessWidget {
         Icon(icon, size: 16, color: warna),
         const SizedBox(width: 8),
         Expanded(
-          child: Text(
-            text,
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade700, height: 1.4),
-          ),
+          child: Text(text,
+              style: TextStyle(
+                  fontSize: 13, color: Colors.grey.shade700, height: 1.4)),
         ),
       ],
     );
